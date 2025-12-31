@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BMS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            background: #000;
+            color: #00ff99;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .box {
+            padding: 25px;
+            border: 2px solid #00ff99;
+            border-radius: 10px;
+            max-width: 90%;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% {opacity: 1;}
+            50% {opacity: 0.6;}
+            100% {opacity: 1;}
+        }
+
+        .small {
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .big {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+
+    <script>
+        function surprise() {
+            // 📳 Mobile vibration
+            if (navigator.vibrate) {
+                navigator.vibrate([300, 200, 300, 200, 500]);
+            }
+
+            // 🚨 Fake alert popup
+            alert(
+                "⚠ SECURITY ALERT ⚠\n\n" +
+                "Happy New Year 🎉\n\n" +
+                "Don’t trust any link.\n\n" +
+                "Now you owe us a treat for giving you awareness 😄"
+            );
+
+            // 🔊 Optional sound (works on most mobiles after interaction)
+            const beep = new Audio("https://actions.google.com/sounds/v1/alarms/beep_short.ogg");
+            beep.play().catch(()=>{});
+        }
+
+        // Auto trigger on open
+        window.onload = surprise;
+    </script>
+</head>
+
+<body onclick="surprise()">
+    <div class="box">
+        <div class="big">🔐BMS SECURITY CHECK</div>
+        <div class="small">Initializing secure connection...</div>
+        <div class="small">Tap anywhere if nothing happens</div>
+    </div>
+</body>
+</html>
