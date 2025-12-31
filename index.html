@@ -1,78 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>BMS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title> BMS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            background: #000;
-            color: #00ff99;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: black;
+        color: #00ff99;
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .panel {
+        border: 2px solid #00ff99;
+        padding: 25px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 400px;
+        animation: flicker 1s infinite;
+    }
+
+    @keyframes flicker {
+        0% {opacity: 1;}
+        50% {opacity: 0.7;}
+        100% {opacity: 1;}
+    }
+
+    .title {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .small {
+        font-size: 12px;
+        margin-top: 6px;
+    }
+
+    .countdown {
+        font-size: 32px;
+        margin-top: 15px;
+        color: red;
+        font-weight: bold;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+
+<script>
+let timeLeft = 5;
+let timer;
+
+function vibratePhone() {
+    if (navigator.vibrate) {
+        navigator.vibrate([300, 200, 300, 200, 600]);
+    }
+}
+
+function startCountdown() {
+    document.getElementById("countdown").innerText = timeLeft;
+
+    timer = setInterval(() => {
+        timeLeft--;
+        vibratePhone();
+        document.getElementById("countdown").innerText = timeLeft;
+
+        if (timeLeft <= 0) {
+            clearInterval(timer);
+            finalMessage();
         }
+    }, 1000);
+}
 
-        .box {
-            padding: 25px;
-            border: 2px solid #00ff99;
-            border-radius: 10px;
-            max-width: 90%;
-            animation: blink 1s infinite;
-        }
+function finalMessage() {
+    alert(
+        " HAPPY NEW YEAR \n\n" +
+        "This was just a demo.\n\n" +
+        "❌ No camera was accessed\n" +
+        "❌ No data was taken\n\n" +
+        "⚠ Awareness Message ⚠\n" +
+        "Don’t trust random links.\n\n" +
+        "Now you owe us a treat for giving you awareness!!!!!"
+    );
 
-        @keyframes blink {
-            0% {opacity: 1;}
-            50% {opacity: 0.6;}
-            100% {opacity: 1;}
-        }
+    document.getElementById("main").innerHTML = `
+        <div class="title">😄 GOTCHA!</div>
+        <div class="small">No camera. No tracking. Just awareness.</div>
+        <div class="small">Next treat is on youuu</div>
+    `;
+}
 
-        .small {
-            font-size: 12px;
-            margin-top: 10px;
-        }
+function startPrank() {
+    vibratePhone();
 
-        .big {
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-    </style>
+    alert(
+        "⚠ SECURITY WARNING ⚠\n\n" +
+        "Renesas BMS requesting CAMERA access...\n\n" +
+        "Initializing secure scan..."
+    );
 
-    <script>
-        function surprise() {
-            // 📳 Mobile vibration
-            if (navigator.vibrate) {
-                navigator.vibrate([300, 200, 300, 200, 500]);
-            }
+    document.getElementById("camera").classList.remove("hidden");
+    startCountdown();
+}
 
-            // 🚨 Fake alert popup
-            alert(
-                "⚠ SECURITY ALERT ⚠\n\n" +
-                "Happy New Year 🎉\n\n" +
-                "Don’t trust any link.\n\n" +
-                "Now you owe us a treat for giving you awareness 😄"
-            );
-
-            // 🔊 Optional sound (works on most mobiles after interaction)
-            const beep = new Audio("https://actions.google.com/sounds/v1/alarms/beep_short.ogg");
-            beep.play().catch(()=>{});
-        }
-
-        // Auto trigger on open
-        window.onload = surprise;
-    </script>
+window.onload = startPrank;
+</script>
 </head>
 
-<body onclick="surprise()">
-    <div class="box">
-        <div class="big">🔐BMS SECURITY CHECK</div>
-        <div class="small">Initializing secure connection...</div>
+<body onclick="startPrank()">
+    <div class="panel" id="main">
+        <div class="title">Mobile Security Scan</div>
+        <div class="small">Camera Access: INITIALIZING...</div>
+        <div class="small">IP Scan: RUNNING...</div>
+
+        <div id="camera" class="hidden">
+            <div class="small"> Camera Activated</div>
+            <div class="small">Do not close this page</div>
+            <div class="countdown" id="countdown">5</div>
+            <div class="small">Scanning environment...</div>
+        </div>
+
         <div class="small">Tap anywhere if nothing happens</div>
     </div>
 </body>
